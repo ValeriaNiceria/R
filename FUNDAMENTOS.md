@@ -13,3 +13,6 @@
 
 ### Encerrando o R
 `quit()`
+
+### Classes -> retorna o tipo do objeto
+`class(iris)`
