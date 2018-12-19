@@ -19,3 +19,6 @@
 
 ### Salvando e carregando Objetos
 `save(objetos, file="arquivo.Rdata")`  -  `load(file="arquivo.Rdata")`
+
+### Visualização de Dados
+`plot()`  -  `hist()`  -  `boxplot()`
