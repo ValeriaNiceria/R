@@ -14,5 +14,8 @@
 ### Encerrando o R
 `quit()`
 
-### Classes -> retorna o tipo do objeto
+### Classes -> retorna o tipo do Objeto
 `class(iris)`
+
+### Salvando e carregando Objetos
+`save(objetos, file="arquivo.Rdata")`  -  `load(file="arquivo.Rdata")`
