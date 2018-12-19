@@ -8,4 +8,5 @@
 
 ### Diretório de trabalho
 >> Saber o diretório padrão `getwd()`
+
 >> Alterar o diretório padrão `setwd("c:\\...")`
