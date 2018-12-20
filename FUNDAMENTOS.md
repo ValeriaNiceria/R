@@ -4,7 +4,7 @@
 `install.packages("devtools", dependencies=TRUE)`
 
 ### Carregar e descarregar - pacote
-`library(devtools)` - `detach("package:devtools", unload=TRUE)`
+`library(devtools)`  --  `detach("package:devtools", unload=TRUE)`
 
 ### Diretório de trabalho
 > Saber o diretório padrão `getwd()`
@@ -18,7 +18,7 @@
 `class(iris)`
 
 ### Salvando e carregando Objetos
-`save(objetos, file="arquivo.Rdata")`  -  `load(file="arquivo.Rdata")`
+`save(objetos, file="arquivo.Rdata")`  --  `load(file="arquivo.Rdata")`
 
 ### Visualização de Dados
 `plot()`  -  `hist()`  -  `boxplot()`
