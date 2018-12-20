@@ -31,3 +31,4 @@
 
 ### Visualização de Dados
 `plot()`  -  `hist()`  -  `boxplot()`
+

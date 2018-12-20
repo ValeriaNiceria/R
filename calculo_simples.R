@@ -19,5 +19,13 @@ potencia1
 potencia2 = a ** b
 potencia2
 
+modo = a %% b
+modo
+
+divisao_inteira = a %/% b
+divisao_inteira
+
 calc = 30 + 20 * 2 ^ 3
 calc
+
+
