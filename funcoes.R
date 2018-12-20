@@ -25,3 +25,29 @@ media(4,3,1)
 
 # Listando objeto
 ls()
+
+
+# Valor Absoluto
+valor <- abs(-5)
+
+# Raíz quadrada
+valor <- sqrt(25)
+
+# Soma
+valor <- sum(4, 10, 20)
+
+# Logaritmo base 10
+valor <- log(64)
+
+# Cosseno
+valor <- cos(30)
+
+# Seno
+valor <- sin(100)
+
+# Tangente
+valor <- tan(55)
+
+# Exponencial
+valor <- exp(2)
+
