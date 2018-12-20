@@ -1,10 +1,14 @@
-## Fundamentos - R  📚
+## Fundamentos em R  📚
 
 ### Instalação de pacote - linha de comando
 `install.packages("devtools", dependencies=TRUE)`
 
+
 ### Carregar e descarregar - pacote
-`library(devtools)`  --  `detach("package:devtools", unload=TRUE)`
+`library(devtools)` 
+
+`detach("package:devtools", unload=TRUE)`
+
 
 ### Diretório de trabalho
 > Saber o diretório padrão `getwd()`
@@ -14,11 +18,16 @@
 ### Encerrando o R
 `quit()`
 
+
 ### Classes -> retorna o tipo do Objeto
 `class(iris)`
 
+
 ### Salvando e carregando Objetos
-`save(objetos, file="arquivo.Rdata")`  --  `load(file="arquivo.Rdata")`
+`save(objetos, file="arquivo.Rdata")` 
+
+`load(file="arquivo.Rdata")`
+
 
 ### Visualização de Dados
 `plot()`  -  `hist()`  -  `boxplot()`
