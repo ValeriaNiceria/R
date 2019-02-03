@@ -1,11 +1,8 @@
-iris
-dim(iris)
-
-# Gerar valores aleatÃ³rios - usando a funÃ§Ã£o sample()
+# Gerar valores aleatórios - usando a função sample()
 # Primeiro o conjunto de dados
-# Depois a quantidade de nÃºmeros aleatÃ³rios
-# Informar se Ã© com reposiÃ§Ã£o ou nÃ£o
-# Por Ãºltimo o vetor de probabilidade
+# Depois a quantidade de números aleatórios
+# Informar se é com reposição ou não
+# Por último o vetor de probabilidade
 amostra = sample(c(0,1), 150, replace = TRUE, prob = c(0.5, 0.5))
 amostra
 
@@ -15,5 +12,3 @@ tamanhoAmostraUm
 tamanhoAmostraZero = length(amostra[amostra==0])
 tamanhoAmostraZero
 
-
-# Gerar amostra extratificada
