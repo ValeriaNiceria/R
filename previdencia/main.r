@@ -8,10 +8,10 @@ library("devtools")
 devtools::install_github("Kohze/fireData")
 
 library(fireData)
-api_key <- Sys.getenv("AIzaSyDbFkmBkwwL7ZY4ZIIzlBbuF_s4mvn-tiQ")
-db_url <- Sys.getenv("https://previdencia-projeto.firebaseio.com")
-project_id <- Sys.getenv("previdencia-projeto")
-project_domain <- Sys.getenv("previdencia-projeto.firebaseapp.com")
+# api_key <- Sys.getenv("AIzaSyDbFkmBkwwL7ZY4ZIIzlBbuF_s4mvn-tiQ")
+# db_url <- Sys.getenv("https://previdencia-projeto.firebaseio.com")
+# project_id <- Sys.getenv("previdencia-projeto")
+# project_domain <- Sys.getenv("previdencia-projeto.firebaseapp.com")
 
 put(x = mtcars, projectURL = db_url, directory = "new")
 
