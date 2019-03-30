@@ -10,6 +10,11 @@ titulos_link <-
   html_nodes(".dataset-heading a") %>%
   html_text()
 
+links <- 
+  pagina %>%
+  html_nodes(".dataset-heading a") %>%
+  html_attr("href")
+
 
 
 ##=========
