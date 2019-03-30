@@ -3,6 +3,11 @@ if (!require(rvest)) install.packages("rvest")
 require(rvest)
 
 
+##=========
+pagina = read_html("http://dadosabertos.dataprev.gov.br/dataset?tags=Previd%C3%AAncia+Social")
+
+
+##=========
 # Título
 page <- read_html("http://dados.gov.br/dataset/aposentadorias-concedidas-por-anos-de-servico")
 titulo <- 
@@ -25,8 +30,8 @@ informacoes <-
 
 campo <- informacoes[[1]]['Campo']
 valor <- informacoes[[1]]['Valor']
+# http://dadosabertos.dataprev.gov.br/
+# http://dados.gov.br/organization/previdencia
+# http://www.previdencia.gov.br/dados-abertos/
 
 
-#http://dadosabertos.dataprev.gov.br/
-#http://dados.gov.br/organization/previdencia
-#http://www.previdencia.gov.br/dados-abertos/
