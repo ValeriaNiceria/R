@@ -9,12 +9,12 @@ library(devtools)
 devtools::install_github("Kohze/fireData", force = TRUE)
 library("fireData")
 
-# api_key <- Sys.getenv("AIzaSyDbFkmBkwwL7ZY4ZIIzlBbuF_s4mvn-tiQ")
-# db_url <- Sys.getenv("https://previdencia-projeto.firebaseio.com")
-# project_id <- Sys.getenv("previdencia-projeto")
-# project_domain <- Sys.getenv("previdencia-projeto.firebaseapp.com")
+api_key <- "AIzaSyDbFkmBkwwL7ZY4ZIIzlBbuF_s4mvn-tiQ"
+db_url <- "https://previdencia-projeto.firebaseio.com"
+project_id <- "previdencia-projeto"
+project_domain <- "previdencia-projeto.firebaseapp.com"
 
-fireData::put(x = mtcars, projectURL = db_url, directory = "new")
+# fireData::put(x = mtcars, projectURL = db_url, directory = "new")
 
 ##=========
 text_links <- c()
@@ -40,17 +40,15 @@ for (page in 1:7) {
 
 
 ##==========
-descricoes <- c()
 for (indice in 1:length(links)) {
   page <- read_html(paste("http://dadosabertos.dataprev.gov.br", links[indice], sep=""))
+  titulo <- text_links[indice]
   
   # Descrição
   descricacao <-
     page %>%
     html_node(".embedded-content p") %>%
     html_text()
-  
-  descricoes <- c(descricoes, descricacao)
   
   
   # Informaçõe Adicionais
@@ -62,7 +60,41 @@ for (indice in 1:length(links)) {
   campo <- informacoes[[1]]['Campo']
   valor <- informacoes[[1]]['Valor']
   
-  autor_valor <- valor$Valor[1]
+  autor <- valor$Valor[1]
+  mantenedor <- valor$Valor[2]
+  frequencia_de_atualizacao <- valor$Valor[3]
+  cobertura_geografica <- valor$Valor[4]
+  documentacao <- valor$Valor[5]
+  granularidade_geografica <- valor$Valor[6]
+  granularidade_temporal <- valor$Valor[7]
+  vcge <- valor$Valor[8]
+  
+  
+  # CSV
+  url_csv <-
+    page %>%
+    html_node(".dropdown ul .resource-url-analytics") %>%
+    html_attr("href")
+  
+  
+  data_csv <- read_csv(url_csv, na.strings = '-', stringsAsFactors = FALSE)
+  
+  # Número de colunas do dataframe
+  # num_column <- length(colnames(data_csv))
+  
+  # for (column in 1:num_column) {
+  #   cabecalho <- names(data_csv[column])
+  #   tipo <- lapply(data_csv[column], class)
+  #   
+  #   if (tipo[1] == "character") {
+  #     resultado <- data.frame(table(data_csv[column]))
+  #     fireData::put(resultado, projectURL = db_url, directory = titulo, title = cabecalho)
+  #   } else if (tipo[1] == "integer") {
+  #     resultado <- lapply(data_csv[column], summary)$cabecalho
+  #     fireData::put(resultado, projectURL = db_url, directory = titulo, title = cabecalho)
+  #   }
+  #   
+  # }
 }
 
 
@@ -75,3 +107,5 @@ for (indice in 1:length(links)) {
 # http://www.previdencia.gov.br/dados-abertos/
 
 
+# > source("main.r", echo=TRUE, print.eval=TRUE)
+# https://stackoverflow.com/questions/41721154/r-jsonlite-create-json-data-in-a-specific-format
