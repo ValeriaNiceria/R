@@ -44,6 +44,8 @@ for (indice in 1:length(links)) {
   page <- read_html(paste("http://dadosabertos.dataprev.gov.br", links[indice], sep=""))
   titulo <- text_links[indice]
   
+  print(titulo)
+  
   # Descrição
   descricacao <-
     page %>%
@@ -76,8 +78,18 @@ for (indice in 1:length(links)) {
     html_node(".dropdown ul .resource-url-analytics") %>%
     html_attr("href")
   
+  print(url_csv)
   
-  data_csv <- read_csv(url_csv, na.strings = '-', stringsAsFactors = FALSE)
+  data_csv <- read.csv(url_csv, na.strings = '-', stringsAsFactors = FALSE, fileEncoding = 'latin1')
+  
+  # cabeçalho
+  names(data_csv)
+  
+  # 2 primeiras linhas do dataframe
+  head(data_csv, n = 2L)
+  
+  # Ajuda
+  ?head
   
   # Número de colunas do dataframe
   # num_column <- length(colnames(data_csv))
