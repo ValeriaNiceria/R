@@ -14,7 +14,8 @@ db_url <- "https://previdencia-projeto.firebaseio.com"
 project_id <- "previdencia-projeto"
 project_domain <- "previdencia-projeto.firebaseapp.com"
 
-# fireData::put(x = mtcars, projectURL = db_url, directory = "new")
+
+fireData::put(x = mtcars, projectURL = db_url, directory = "new")
 
 ##=========
 text_links <- c()
