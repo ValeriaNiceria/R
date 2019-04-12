@@ -1,21 +1,9 @@
-if (!require("rvest")) install.packages("rvest")
-require("rvest")
+install.packages(c("rvest", "dplyr"))
 
+require(rvest)
+library(dplyr)
+library(stringr)
 
-if (!require("devtools")) install.packages("devtools")
-library(devtools)
-
-
-devtools::install_github("Kohze/fireData", force = TRUE)
-library("fireData")
-
-api_key <- "AIzaSyDbFkmBkwwL7ZY4ZIIzlBbuF_s4mvn-tiQ"
-db_url <- "https://previdencia-projeto.firebaseio.com"
-project_id <- "previdencia-projeto"
-project_domain <- "previdencia-projeto.firebaseapp.com"
-
-
-fireData::put(x = mtcars, projectURL = db_url, directory = "new")
 
 ##=========
 text_links <- c()
@@ -47,14 +35,14 @@ for (indice in 1:length(links)) {
   
   print(titulo)
   
-  # DescriÃ§Ã£o
+  # Descrição
   descricacao <-
     page %>%
     html_node(".embedded-content p") %>%
     html_text()
   
   
-  # InformaÃ§Ãµe Adicionais
+  # Informaçõe Adicionais
   informacoes <-
     page %>%
     html_table()
@@ -72,6 +60,16 @@ for (indice in 1:length(links)) {
   granularidade_temporal <- valor$Valor[7]
   vcge <- valor$Valor[8]
   
+  # Criando um dataframe com as informações adicionais
+  dataframe_info_adicional <- data.frame("autor" = autor, 
+                                         "mantenedor" = mantenedor, 
+                                         "frequencia_de_atualizacao" = frequencia_de_atualizacao,
+                                         "cobertura_geografica" = cobertura_geografica,
+                                         "documentacao" = documentacao,
+                                         "granularidade_geografica"= granularidade_geografica,
+                                         "granularidade_temporal" = granularidade_temporal,
+                                         "vcge" = vcge)
+  
   
   # CSV
   url_csv <-
@@ -79,35 +77,53 @@ for (indice in 1:length(links)) {
     html_node(".dropdown ul .resource-url-analytics") %>%
     html_attr("href")
   
-  print(url_csv)
-  
+
   data_csv <- read.csv(url_csv, na.strings = '-', stringsAsFactors = FALSE, fileEncoding = 'latin1')
   
-  # cabeÃ§alho
+  # Verificando se o arquivo é xml
+  if (grepl(url_csv, 'format=xml')) {
+    data_csv <- read_xml(url_csv, na.strings = '-', stringsAsFactors = FALSE)
+  }
+  
+  
+  # cabeçalho
   names(data_csv)
   
   # 2 primeiras linhas do dataframe
   head(data_csv, n = 2L)
   
   # Ajuda
-  ?head
+  # ?head
   
-  # NÃºmero de colunas do dataframe
-  # num_column <- length(colnames(data_csv))
+  # Número de colunas do dataframe
+  num_column <- length(colnames(data_csv))
   
-  # for (column in 1:num_column) {
-  #   cabecalho <- names(data_csv[column])
-  #   tipo <- lapply(data_csv[column], class)
-  #   
-  #   if (tipo[1] == "character") {
-  #     resultado <- data.frame(table(data_csv[column]))
-  #     fireData::put(resultado, projectURL = db_url, directory = titulo, title = cabecalho)
-  #   } else if (tipo[1] == "integer") {
-  #     resultado <- lapply(data_csv[column], summary)$cabecalho
-  #     fireData::put(resultado, projectURL = db_url, directory = titulo, title = cabecalho)
-  #   }
-  #   
-  # }
+  
+  for (column in 1:num_column) {
+    cabecalho <- names(data_csv[column])
+    
+    # Tratando a coluna - substituindo valores
+    coluna_tratada <- data_csv[column] %>% 
+      mutate(new_column = str_replace_all(data_csv[[cabecalho]], c("R$" = "", "-" = "", "nan" = "", ',' = '.'))) %>% 
+      na.omit()
+    
+    # Transformando a coluna em numerico
+    coluna_alterada_tipo <- as.numeric(coluna_tratada$new_column)
+    
+    # Atribuindo o primeiro valor da lista a uma variável
+    primeiro_valor_coluna <- coluna_alterada_tipo[1]
+    
+    
+    if (is.na(primeiro_valor_coluna)) {
+      resultado <- table(data.frame(coluna_tratada$new_column))
+      print(resultado)
+    } else {
+      resultado <- lapply(data.frame(coluna_alterada_tipo), summary)
+      print(resultado)
+    }
+    
+    
+  }
 }
 
 
