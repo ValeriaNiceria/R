@@ -1,16 +1,14 @@
-# install.packages(c("tibble", "httr", "rvest", "dplyr", "ggplot2"))
+# install.packages(c("tibble", "httr", "rvest", "dplyr", "ggplot2", "purrr"))
 
 library(tibble)
 library(httr)
 library(rvest)
 library(dplyr)
 library(ggplot2)
-
-install.packages("purrr")
 library(purrr)
 
 
-# Acessando a p√°gina de um ano
+# Acessando a p·gina de um ano
 ano <- 2018
 cdg_url <- sprintf('http://www.chancedegol.com.br/br%02d.htm', ano - 2000)
 
@@ -36,7 +34,7 @@ cdg_data <- cdg_html %>%
   mutate(result = 'OK')
 
 
-# Colocando dentro de uma fun√ß√£o
+# Colocando dentro de uma funÁ„o
 cdg_ano <- function(ano) {
   cdg_url <- sprintf('http://www.chancedegol.com.br/br%02d.htm', ano - 2000)
   
