@@ -92,6 +92,7 @@ server <- function(input, output) {
   
   # Create data table
   output$moviestable <- DT::renderDataTable({
+    req(input$n)
     movies_sample <- movies %>% 
       sample_n(input$n) %>% 
       select(title:studio)
