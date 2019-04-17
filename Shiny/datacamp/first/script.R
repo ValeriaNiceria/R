@@ -1,10 +1,16 @@
 # install.packages("shiny")
 # install.packages("ggplot2")
+# install.packages("DT")
+# install.packages("dplyr")
 
 library(shiny)
 library(ggplot2)
+library(dplyr)
+library(DT)
+
 
 load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_4850/datasets/movies.Rdata"))
+n_total <- 651
 
 # Define UI for application that plots features of movies
 ui <- fluidPage(
@@ -46,13 +52,24 @@ ui <- fluidPage(
       sliderInput(inputId = "alpha",
                   label = "Alpha:",
                   min = 0, max = 1,
-                  value = 0.5)
+                  value = 0.5),
+      # Input Table
+      # Text instructions
+      HTML(paste("Enter a value between 1 and", n_total)),
+      
+      # Numeric input for sample size
+      numericInput(inputId = "n",
+                   label = "Sample size:",
+                   min = 1, max = n_total,
+                   value = 30,
+                   step = 1)
     ),
     
     # Outputs
     mainPanel(
       plotOutput(outputId = "scatterplot"),
-      plotOutput(outputId = "densityplot", height = 200)
+      plotOutput(outputId = "densityplot", height = 200),
+      DT::dataTableOutput(outputId = "moviestable")
     )
   )
 )
@@ -71,6 +88,16 @@ server <- function(input, output) {
   output$densityplot <- renderPlot({
     ggplot(data = movies, aes_string(x = input$x)) +
       geom_density()
+  })
+  
+  # Create data table
+  output$moviestable <- DT::renderDataTable({
+    movies_sample <- movies %>% 
+      sample_n(input$n) %>% 
+      select(title:studio)
+    DT::datatable(data = movies_sample,
+                  options = list(pageLength = 5),
+                  rownames = FALSE)
   })
 }
 
