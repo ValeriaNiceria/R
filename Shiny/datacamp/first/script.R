@@ -11,6 +11,7 @@ library(DT)
 
 load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_4850/datasets/movies.Rdata"))
 n_total <- 651
+all_studios <- sort(unique(movies$studio))
 
 # Define UI for application that plots features of movies
 ui <- fluidPage(
@@ -30,6 +31,7 @@ ui <- fluidPage(
                               "Audience_score" = "audience_score", 
                               "Runtime" = "runtime"),
                   selected = "imdb_rating"),
+      
       # Select variable for x-axis
       selectInput(inputId = "x",
                   label = "X-axis:",
@@ -39,6 +41,7 @@ ui <- fluidPage(
                               "Audience score" = "audience_score", 
                               "Runtime" = "runtime"),
                   selected = "imdb_num_votes"),
+      
       # Select variable for color
       selectInput(inputId = "z",
                   label = "Color by:",
@@ -48,6 +51,7 @@ ui <- fluidPage(
                               "Critics rating" = "critics_rating", 
                               "Audience rating" = "audience_rating"),
                   selected = "mpaa_rating"),
+      
       # Alpha level
       sliderInput(inputId = "alpha",
                   label = "Alpha:",
@@ -62,7 +66,16 @@ ui <- fluidPage(
                    label = "Sample size:",
                    min = 1, max = n_total,
                    value = 30,
-                   step = 1)
+                   step = 1),
+      
+      # Select Studio
+      selectInput(inputId = "studio",
+                  label = "Select studio",
+                  choices = all_studios,
+                  selected = "20th Century Fox",
+                  multiple = TRUE,
+                  selectize = TRUE)
+      
     ),
     
     # Outputs
@@ -92,10 +105,12 @@ server <- function(input, output) {
   
   # Create data table
   output$moviestable <- DT::renderDataTable({
-    req(input$n)
+    # req(input$n)
+    req(input$studio)
     movies_sample <- movies %>% 
-      sample_n(input$n) %>% 
-      select(title:studio)
+      # sample_n(input$n) %>%
+      filter(studio %in% input$studio) %>% 
+      select(title:studio) 
     DT::datatable(data = movies_sample,
                   options = list(pageLength = 5),
                   rownames = FALSE)
