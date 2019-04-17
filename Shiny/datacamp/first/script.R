@@ -18,17 +18,29 @@ ui <- fluidPage(
       # Select variable for y-axis
       selectInput(inputId = "y",
                   label = "Y-axis:",
-                  choices = c("imdb_rating", "imdb_num_votes", "critics_score", "audience_score", "runtime"),
+                  choices = c("IMDB rating" = "imdb_rating", 
+                              "IMDB number of votes" = "imdb_num_votes", 
+                              "Critics score" = "critics_score", 
+                              "Audience_score" = "audience_score", 
+                              "Runtime" = "runtime"),
                   selected = "imdb_rating"),
       # Select variable for x-axis
       selectInput(inputId = "x",
                   label = "X-axis:",
-                  choices = c("imdb_rating", "imdb_num_votes", "critics_score", "audience_score", "runtime"),
+                  choices = c("IMDB rating" = "imdb_rating", 
+                              "IMDB number of votes" = "imdb_num_votes", 
+                              "Critics score" = "critics_score", 
+                              "Audience score" = "audience_score", 
+                              "Runtime" = "runtime"),
                   selected = "imdb_num_votes"),
       # Select variable for color
       selectInput(inputId = "z",
                   label = "Color by:",
-                  choices = c("title_type", "genre", "mpaa_rating", "critics_rating", "audience_rating"),
+                  choices = c("Title type" = "title_type", 
+                              "Genre" = "genre", 
+                              "MPAA rating" = "mpaa_rating", 
+                              "Critics rating" = "critics_rating", 
+                              "Audience rating" = "audience_rating"),
                   selected = "mpaa_rating")
     ),
     
@@ -45,7 +57,7 @@ server <- function(input, output) {
   
   # Create scatterplot object the plotOutput function is expecting
   output$scatterplot <- renderPlot({
-    ggplot(data = movies, aes_string(x = input$x, y = input$y), color = input$z) +
+    ggplot(data = movies, aes_string(x = input$x, y = input$y, color = input$z)) +
       geom_point()
   })
 }
