@@ -78,12 +78,14 @@ sidebar <- dashboardSidebar(
     menuItem("Widgets", icon = icon("th"), tabName = "widgets",
              badgeLabel = "new", badgeColor = "green"),
     menuItem("tabBox", icon = icon("table"), tabName = "tabBox"),
+    menuItem("infoBox", icon = icon("info"), tabName = "infoBox"),
     menuItem("Source code", icon = icon("file-code-o"), href = "https://github.com/rstudio/shinydashboard/")
   ),
   
   # Dinamic content
   sidebarMenuOutput("menu")
 )
+
 
 # Define Dashboard Page ----
 dashboardPage <- fluidRow(
@@ -130,14 +132,25 @@ tabBoxPageF <- fluidRow(
   )
 )
 
+# Define infoBoxPage ----
+infoBoxPage <- fluidRow(
+  infoBox("New Orders", 10 * 2, icon = icon("credit-card")),
+  infoBoxOutput("progressBox"),
+  infoBoxOutput("approvalBox")
+)
+
+
+
 # Define Body ----
 body <- dashboardBody(
   tabItems(
     tabItem(tabName = "dashboard", dashboardPage),
     tabItem(tabName = "widgets", h2("Widgets tab content")),
-    tabItem(tabName = "tabBox", tabBoxPageH, tabBoxPageF)
+    tabItem(tabName = "tabBox", tabBoxPageH, tabBoxPageF),
+    tabItem(tabName = "infoBox", infoBoxPage)
   )
 )
+
 
 
 # Define UI ----
@@ -177,6 +190,23 @@ server <- function(input, output) {
   # tabBox
   output$tabset1Selected <- renderText({
     input$tabset1
+  })
+  
+  
+  # infoBox
+  output$progressBox <- renderInfoBox({
+    infoBox(
+      "progress",
+      paste0(25 + 10, "%"), icon = icon("list"),
+      color = "purple", fill = TRUE
+    )
+  })
+  
+  output$approvalBox <- renderInfoBox({
+    infoBox(
+      "approval", "80%", icon = icon("thumbs-up", lib = "glyphicon"),
+      color = "yellow", fill = TRUE
+    )
   })
   
 }
