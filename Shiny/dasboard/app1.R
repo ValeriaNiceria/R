@@ -4,6 +4,7 @@
 library(shiny)
 library(shinydashboard)
 
+
 # Define Header ----
 header <- dashboardHeader(
   title = "My dashboard",
@@ -82,11 +83,28 @@ sidebar <- dashboardSidebar(
   sidebarMenuOutput("menu")
 )
 
+# Define Dashboard Page ----
+dashboardPage <- fluidRow(
+  box(title = "Histogram", 
+      status = "primary", 
+      solidHeader = TRUE,
+      collapsible = TRUE,
+      plotOutput("plot1", height = 250)),
+  
+  box(title = "Inputs",
+      status = "warning",
+      solidHeader = TRUE,
+      collapsible = TRUE,
+      "Box content here", br(), "More box content",
+      sliderInput("slider", "Slider input:", 1, 100, 50),
+      textInput("text", "Text input:")
+  )
+)
 
 # Define Body ----
 body <- dashboardBody(
   tabItems(
-    tabItem(tabName = "dashboard", h2("Dashboard tab content")),
+    tabItem(tabName = "dashboard", dashboardPage),
     tabItem(tabName = "widgets", h2("Widgets tab content"))
   )
 )
@@ -115,6 +133,14 @@ server <- function(input, output) {
     sidebarMenu(
       menuItem("Menu item", icon = icon("calendar"))
     )
+  })
+  
+  # Plot
+  set.seed(122)
+  histdata <- rnorm(500)
+  output$plot1 <- renderPlot({
+    data <- histdata[seq_len(input$slider)]
+    hist(data)
   })
   
 }
