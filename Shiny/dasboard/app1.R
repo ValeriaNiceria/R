@@ -69,6 +69,11 @@ header <- dashboardHeader(
 
 # Define Sidebar ----
 sidebar <- dashboardSidebar(
+  # Logout panel
+  # Custom CSS
+  tags$head(tags$style(HTML('.shiny-server-account { display: none; }'))),
+  uiOutput("userpanel"),
+  
   # Sidebar inputs
   sidebarSearchForm(textId = "search_text", buttonId = "search_button",
                     label = "Search..."),
@@ -166,6 +171,8 @@ ui <- dashboardPage(
 )
 
 
+
+
 # Define server ----
 server <- function(input, output) {
   messageData <- data.frame("from" = "teste",
@@ -216,6 +223,11 @@ server <- function(input, output) {
       "approval", "80%", icon = icon("thumbs-up", lib = "glyphicon"),
       color = "yellow", fill = TRUE
     )
+  })
+  
+  
+  # Logout panel
+  output$userpanel <- renderUI({
   })
   
 }
