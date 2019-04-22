@@ -154,7 +154,16 @@ body <- dashboardBody(
 
 
 # Define UI ----
-ui <- dashboardPage(header, sidebar, body)
+ui <- dashboardPage(
+  # Skins - back - blue - purple - green - red - yellow
+  skin = "blue",
+  # Header
+  header, 
+  # Sidebar
+  sidebar, 
+  # Body
+  body
+)
 
 
 # Define server ----
