@@ -66,6 +66,7 @@ header <- dashboardHeader(
 
 
 
+
 # Define Sidebar ----
 sidebar <- dashboardSidebar(
   # Sidebar inputs
@@ -76,6 +77,7 @@ sidebar <- dashboardSidebar(
     menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
     menuItem("Widgets", icon = icon("th"), tabName = "widgets",
              badgeLabel = "new", badgeColor = "green"),
+    menuItem("tabBox", icon = icon("table"), tabName = "tabBox"),
     menuItem("Source code", icon = icon("file-code-o"), href = "https://github.com/rstudio/shinydashboard/")
   ),
   
@@ -101,11 +103,39 @@ dashboardPage <- fluidRow(
   )
 )
 
+# Define tabBoxPage ----
+tabBoxPageH <- fluidRow(
+  tabBox(
+    title = "Fist tabBox",
+    id = "tabset1", height = "250px",
+    tabPanel("Tab1", "First tab content"),
+    tabPanel("Tab2", "Tab content 2")
+  ),
+  tabBox(
+    side = "right", height = "250px",
+    selected = "Tab3",
+    tabPanel("Tab1", "Tab content 1"),
+    tabPanel("tab2", "Tab content 2"),
+    tabPanel("tab3", "Tab content 3")
+  )
+)
+
+tabBoxPageF <- fluidRow(
+  tabBox(
+    title = tagList(shiny::icon("gear"), "tabBox status"),
+    tabPanel("tab1",
+             "Currently selected tab from first box:",
+             verbatimTextOutput("tabset1Selected")),
+    tabPanel("Tab2", "Tab Content 2")
+  )
+)
+
 # Define Body ----
 body <- dashboardBody(
   tabItems(
     tabItem(tabName = "dashboard", dashboardPage),
-    tabItem(tabName = "widgets", h2("Widgets tab content"))
+    tabItem(tabName = "widgets", h2("Widgets tab content")),
+    tabItem(tabName = "tabBox", tabBoxPageH, tabBoxPageF)
   )
 )
 
@@ -141,6 +171,12 @@ server <- function(input, output) {
   output$plot1 <- renderPlot({
     data <- histdata[seq_len(input$slider)]
     hist(data)
+  })
+  
+  
+  # tabBox
+  output$tabset1Selected <- renderText({
+    input$tabset1
   })
   
 }
