@@ -61,11 +61,35 @@ header <- dashboardHeader(
   # disable = TRUE  
 )
 
+
+
+
+
 # Define Sidebar ----
-sidebar <- dashboardSidebar()
+sidebar <- dashboardSidebar(
+  # Sidebar inputs
+  sidebarSearchForm(textId = "search_text", buttonId = "search_button",
+                    label = "Search..."),
+  # Menu
+  sidebarMenu(id = "sidebar",
+    menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
+    menuItem("Widgets", icon = icon("th"), tabName = "widgets",
+             badgeLabel = "new", badgeColor = "green"),
+    menuItem("Source code", icon = icon("file-code-o"), href = "https://github.com/rstudio/shinydashboard/")
+  ),
+  
+  # Dinamic content
+  sidebarMenuOutput("menu")
+)
+
 
 # Define Body ----
-body <- dashboardBody()
+body <- dashboardBody(
+  tabItems(
+    tabItem(tabName = "dashboard", h2("Dashboard tab content")),
+    tabItem(tabName = "widgets", h2("Widgets tab content"))
+  )
+)
 
 
 # Define UI ----
@@ -86,6 +110,12 @@ server <- function(input, output) {
   })
   
   ?renderMenu
+  
+  output$menu <- renderMenu({
+    sidebarMenu(
+      menuItem("Menu item", icon = icon("calendar"))
+    )
+  })
   
 }
 
