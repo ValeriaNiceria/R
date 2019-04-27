@@ -16,7 +16,3 @@ uf <- c('DF', 'SP', 'RJ', 'MG')
 # sendo assim, cada vetor pode ser uma coluna de um data.frame
 
 clientes <- data.frame(nome, idade, adulto, uf)
-
-
-# Conversões de tipos de variáveis
-sa
