@@ -6,7 +6,8 @@ library(shinydashboard)
 
 # Define UI ----
 ui <- dashboardPage(
-  dashboardHeader(title = "Basic dashboard"),
+  dashboardHeader(title = "Basic dashboard",
+                  tags$link(rel = "stylesheet", type = "text/css", href = "style.css")),
   # Sidebar content
   dashboardSidebar(
     sidebarMenu(
