@@ -9,7 +9,7 @@ leaflet() %>%
 if (!require(ggmap)) {install.packages("ggmap")}
 library(ggmap)
 # Utilizada localização da Praça Sete
-loc.praca_sete <- data.frame(lon = -43.9386, lat = -19.9191)
+loc.praca_sete <- data.frame(lon = -43.9385851, lat = -19.9191023)
 loc.praca_sete$popup <- "Praça Sete - BH"
 leaflet(loc.praca_sete) %>% 
   addTiles() %>% 
