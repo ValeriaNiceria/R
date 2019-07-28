@@ -1,1 +1,1 @@
-![Estudo em R](readme.png)
+![Estudo em R](banner.png)
