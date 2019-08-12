@@ -51,3 +51,28 @@ df$year %>% unique()
 # criar dataset apenas para o ano mais recente
 df_2017 <- df %>% 
   filter(year == max(year))
+
+
+# geom_bar() e geom_col()
+# Tarefa: Criando um gráfico mostrando a média do score de felidade por continente
+df_2017 %>% 
+  group_by(continent) %>% 
+  summarise(life_ladder = mean(life_ladder)) %>% 
+  ggplot(aes(x = continent, y = life_ladder)) +
+  geom_col()
+
+
+
+# geom_point()
+df_2017 %>% 
+  filter(!is.na(log_gdp_per_capita), !is.na(healthy_life_expectancy_at_birth)) %>% 
+  ggplot(aes(x = log_gdp_per_capita, y = healthy_life_expectancy_at_birth)) +
+  geom_point()
+
+
+
+# geom_line()
+df %>% 
+  filter(country == 'Brazil') %>% 
+  ggplot(aes(x = year, y = life_ladder)) +
+  geom_line()
