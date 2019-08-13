@@ -76,3 +76,27 @@ df %>%
   filter(country == 'Brazil') %>% 
   ggplot(aes(x = year, y = life_ladder)) +
   geom_line()
+
+
+
+# geom_histogram()
+df_2017 %>% 
+  ggplot(aes(x = life_ladder)) +
+  geom_histogram()
+
+
+
+# geom_text()
+df_2017 %>%
+  ggplot(aes(x = log_gdp_per_capita, y = healthy_life_expectancy_at_birth)) +
+  geom_point() +
+  geom_text(aes(label = country))
+
+
+
+# geom_hline() e geom_vline()
+df_2017 %>% 
+  ggplot(aes(x = log_gdp_per_capita, y = healthy_life_expectancy_at_birth)) +
+  geom_point() +
+  geom_vline(aes(xintercept = mean(df_2017$log_gdp_per_capita, na.rm = TRUE))) +
+  geom_hline(aes(yintercept = mean(df_2017$healthy_life_expectancy_at_birth, na.rm = TRUE)))
