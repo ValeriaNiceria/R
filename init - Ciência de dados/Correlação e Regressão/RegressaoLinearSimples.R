@@ -1,8 +1,7 @@
 # Regressão Linear Simples
-library(dplyr)
 
 # Banco de dados - base do R (cars)
-cars %>% View()
+View(cars)
 
 # Verificando se existe uma correlação entre as variáveis
 cor(cars)
