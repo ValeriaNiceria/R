@@ -31,3 +31,15 @@ previsao
 
 previsao = predict(modelo, data.frame(dist=22))
 previsao
+
+
+# Sumário do modelo
+summary(modelo)
+
+# Residuais -> É a distancia entre o ponto dos dados e a linha de melhor ajuste.
+modelo$residuals
+
+# Valores ajustados
+modelo$fitted.values
+
+plot(modelo$fitted.values, cars$dist)
