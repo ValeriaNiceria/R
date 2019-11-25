@@ -79,6 +79,24 @@ queimadas_media_mes <-
   group_by(month) %>% 
   summarise(media = mean(total))
 
+teste <-
+dados %>% 
+  left_join(uf_state) %>% 
+  group_by(UF) %>% 
+  summarise(total = sum(number)) %>% 
+  mutate(UF = as.character(UF))
+
+
+hcmap("countries/br/br-all", data = teste, value = "total",
+      joinBy =  c("hc-a2", "UF"), name= "Total de queimadas",
+      dataLabels = list(enabled = TRUE, format = '{point.code}'),
+      tooltip = list(valueDecimals = 2, valuePrefix = "")) %>%
+  hc_colorAxis(minColor = "#FEE4D7", maxColor = "#9b0000") %>% 
+  hc_credits(enabled = FALSE)
+
+
+graf_map_queimadas_totais
+ui_graf_queimadas_estados_totais
 
 # Juntando os dataframes pelo mês e tranformando a coluna mês no tipo caracter
 df_queimadas_media_mes <- left_join(queimadas_media_mes, meses, by = "month") %>% 
